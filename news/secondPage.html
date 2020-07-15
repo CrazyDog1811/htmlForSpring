@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>newsById</title>
+</head>
+
+<body>
+
+    <div class="card mb-3" id="main2">
+    </div>
+
+    <script>
+        const ACCESS_STATUS_OK = 200;
+        window.addEventListener('load', () => {
+            let req = new XMLHttpRequest();
+
+            req.open('GET', `http://localhost:8080/api/v1/news/7119eb36-d889-40fd-b78d-dfa8e28e4d82`, true);
+            req.send();
+
+            req.onload = function () {
+                if (req.status === ACCESS_STATUS_OK) {
+
+
+                    let result = JSON.parse(req.responseText);
+                    let child = `  <img src="${result.urlLogo}" class="card-img-top" alt="...">
+                     <div class="card-body">
+    <h5 class="card-title">${result.header}</h5>
+    <p class="card-text">${result.text}</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <i class="fa fa-spinner fa-spin fa-shopping-basket" aria-hidden="true" style="float: right"></i>
+  </div>
+`;
+
+                    let main2 = document.getElementById('main2');
+                    main2.innerHTML += child;
+                } else {
+                    alert("MISTAKE");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
