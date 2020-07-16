@@ -4,11 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <title>findCar</title>
 </head>
 
 <body>
+    <form>
+        <input type="text" placeholder="enter serial number">
+        <button type="button" class="myBtn">find car</button>
+    </form>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Serial number</th>
+                <th scope="col">Owners name</th>
+                <th scope="col">Date of entry</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
 
+        </tbody>
+    </table>
+
+    <script>
+        const ACCESS_STATUS_OK = 200;
+        let inputNumber = document.querySelector('input');
+        let btn = document.querySelector('.myBtn');
+        btn.onclick = function () {
+            let myValue = inputNumber.value;
+            inputNumber.value = '';
+            let req = new XMLHttpRequest();
+            req.open('GET', `http://localhost:8080/api/ap1/parcking/${myValue}`, true);
+            req.send();
+            req.onload = function () {
+                if (req.status === ACCESS_STATUS_OK) {
+                    let result = JSON.parse(req.responseText);
+                    let tableRaw = `
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>${result.serialNumber}</td>
+                      <td>${result.owner}</td>
+                      <td>${result.dateIn}</td>
+                    </tr>
+                    `;
+
+                    let tableBody = document.getElementById("tableBody");
+                    tableBody.innerHTML = tableRaw;
+                } else {
+                    alert("error");
+                }
+            }
+        }; 
+    </script>
 </body>
 
 </html>
