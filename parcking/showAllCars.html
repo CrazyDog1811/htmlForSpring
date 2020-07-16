@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>myParcking</title>
+</head>
+
+<body>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Serial number</th>
+                <th scope="col">Owners name</th>
+                <th scope="col">Date of entry</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+
+        </tbody>
+    </table>
+
+    <script>
+        const ACCESS_STATUS_OK = 200;
+        window.addEventListener('load', () => {
+            let req = new XMLHttpRequest();
+            req.open('GET', `http://localhost:8080/api/ap1/parcking/all`, true);
+            req.send();
+            req.onload = function () {
+                if (req.status === ACCESS_STATUS_OK) {
+                    let resultList = JSON.parse(req.responseText);
+                    resultList.forEach((value, index) => {
+                        let tableRaw = `  
+             <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${value.serialNumber}</td>
+                <td>${value.owner}</td>
+                <td>${value.dateIn}</td>
+            </tr>
+            `;
+                        let tableBody = document.getElementById("tableBody");
+                        tableBody.innerHTML += tableRaw;
+                    });
+
+                } else {
+                    alert("mistake");
+                }
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>
