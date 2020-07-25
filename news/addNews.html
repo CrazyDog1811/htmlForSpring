@@ -8,7 +8,7 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>article by id</title>
+    <title>Add article</title>
 </head>
 
 <body>
@@ -33,47 +33,43 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input id="inp1" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button id="myBtn" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
 
-    <div class="card mb-3" id="main2">
+    <div class="container mt-5 mb-5">
+        <h1>Add article</h1>
+        <form action="http://localhost:8080/api/v1/news" method="POST" name="news">
+            <input class="form-control" type="text" name="header" placeholder="header"><br>
+            <textarea class="form-control" name="text" placeholder="text"></textarea><br>
+            <input class="form-control" type="text" name="urlLogo" placeholder="urlLogo"><br>
+            <button type="submit" class="btn btn-success">add article</button>
+        </form>
     </div>
 
-    <script>
-        const ACCESS_STATUS_OK = 200;
-        let input = document.getElementById('inp1');
-        let btn = document.getElementById('myBtn');
-        btn.onclick = function () {
-            // window.addEventListener('load', () => {
-            let inputText = input.value;
-            input.value = '';
+
+    <!-- <script>
+        let f1 = document.getElementById('f1');
+        f1.onsubmit = function () {
             let req = new XMLHttpRequest();
+            req.open('POST', `http://localhost:8080/api/v1/news`, true);
+            setRequestHeader("Content-Type", "application/json");
+            let data = JSON.stringify({ "header": header.value, "text": text.value, "urlLogo": urlLogo.value });
+            req.send(data);
+        }
+    </script> -->
 
-            req.open('GET', `http://localhost:8080/api/v1/news/${inputText}`, true);
-            req.send();
-            req.onload = function () {
-                if (req.status === ACCESS_STATUS_OK) {
-                    let result = JSON.parse(req.responseText);
-                    let child = `  <img src="${result.urlLogo}" class="card-img-top" alt="...">
-                     <div class="card-body">
-    <h5 class="card-title">${result.header}</h5>
-    <p class="card-text">${result.text}</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    <i class="fa fa-spinner fa-spin fa-trash-o" aria-hidden="true" style="float: right"></i>
-  </div>
-`;
-
-                    let main2 = document.getElementById('main2');
-                    main2.innerHTML = child;
-                } else {
-                    alert("MISTAKE");
-                }
-            }
-        };
-    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

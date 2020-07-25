@@ -19,6 +19,7 @@
                 <th scope="col">Serial number</th>
                 <th scope="col">Owners name</th>
                 <th scope="col">Date of entry</th>
+                <th scope="col">Delete car</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -28,6 +29,16 @@
 
     <script>
         const ACCESS_STATUS_OK = 200;
+        function deleteCar(context) {
+            let deleteReq = new XMLHttpRequest();
+            deleteReq.open('DELETE', `http://localhost:8080/api/ap1/parcking/${context.id}`, true);
+            deleteReq.send();
+            deleteReq.onload = function () {
+                if (deleteReq.status === ACCESS_STATUS_OK) {
+                    document.getElementById(`card-${context.id}`).remove();
+                }
+            }
+        }
         window.addEventListener('load', () => {
             let req = new XMLHttpRequest();
             req.open('GET', `http://localhost:8080/api/ap1/parcking/all`, true);
@@ -36,16 +47,20 @@
                 if (req.status === ACCESS_STATUS_OK) {
                     let resultList = JSON.parse(req.responseText);
                     resultList.forEach((value, index) => {
-                        let tableRaw = `  
-             <tr>
+                        let tableRaw = document.createElement('tr');
+                        tableRaw.setAttribute('id', `card-${value.id}`);
+                        tableRaw.innerHTML = `  
+             
                 <th scope="row">${index + 1}</th>
                 <td>${value.serialNumber}</td>
                 <td>${value.owner}</td>
                 <td>${value.dateIn}</td>
-            </tr>
+                <td> <i class="fa fa-trash-o fa-lg" aria-hidden="true"
+                 title="delete this car" id="${value.id}" onclick="deleteCar(this)"></i></td>
+            
             `;
                         let tableBody = document.getElementById("tableBody");
-                        tableBody.innerHTML += tableRaw;
+                        tableBody.appendChild(tableRaw);
                     });
 
                 } else {

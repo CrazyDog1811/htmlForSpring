@@ -12,21 +12,87 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+            <img src="http://tandaiviet.org/v1/wp-content/uploads/2016/04/news32_files-620x264.png" width="80"
+                height="30" alt="" loading="lazy">
+            <img src="https://yt3.ggpht.com/a/AATXAJwjWBfwYFu4F_xGDhub6szinidkjbWdAB75Cg=s900-c-k-c0xffffffff-no-rj-mo"
+                width="30" height="30" alt="" loading="lazy">
+            MY NEWS
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="row row-cols-1 row-cols-md-2" id="main">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/news/ShowAllNews.html">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/news/findNewsById.html">News by
+                        id</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/news/addNews.html">Add News
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/news/updateNews.html">Update News
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        TOPICS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Politic</a>
+                        <a class="dropdown-item" href="#">Natural</a>
+                        <a class="dropdown-item" href="#">Sport</a>
+                        <a class="dropdown-item" href="#">Fashion</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="row row-cols-1 row-cols-md-2 mt-2" id="main">
     </div>
 
     <script>
-        const ACCESS_STATUS = 200;
+        const ACCESS_STATUS_OK = 200;
+
+        function deleteNews(context) {
+            let deleteReq = new XMLHttpRequest();
+            deleteReq.open('DELETE', `http://localhost:8080/api/v1/news/${context.id}`, true);
+            deleteReq.send();
+            deleteReq.onload = function () {
+                if (deleteReq.status === ACCESS_STATUS_OK) {
+                    document.getElementById(`card-${context.id}`).remove();
+                }
+            }
+        }
+
         window.addEventListener('load', () => {
             let req = new XMLHttpRequest();
             req.open('GET', `http://localhost:8080/api/v1/news/all`, true);
             req.send();
             req.onload = function () {
-                if (req.status === ACCESS_STATUS) {
+                if (req.status === ACCESS_STATUS_OK) {
                     let resultList = JSON.parse(req.responseText);
                     resultList.forEach((value, index) => {
-                        let child = ` 
+                        let child = document.createElement('div');
+                        child.setAttribute('id', `card-${value.id}`);
+                        child.innerHTML = ` 
                         <div class="col mb-4">
                          <div class="card">
             <img src="${value.urlLogo}" class="card-img-top" alt="...">
@@ -36,12 +102,13 @@
             </div>
             <div class="card-footer">
                 <small class="text-muted">Last updated 3 mins ago</small>
-                <i class="fa fa-spinner fa-spin fa-shopping-basket" aria-hidden="true" style="float: right"></i>
+                <i class="fa fa-trash-o fa-lg" aria-hidden="true"
+                 title="delete this news" style="float: right" id="${value.id}" onclick="deleteNews(this)"></i>
             </div>
             </div>
         </div>`;
                         let main = document.getElementById('main');
-                        main.innerHTML += child;
+                        main.appendChild(child);
                     });
                 } else {
                     alert("error");
@@ -49,6 +116,15 @@
             }
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
