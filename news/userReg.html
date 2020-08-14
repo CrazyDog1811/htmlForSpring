@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>userRegistration</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-5">WELCOME TO AUTHORIZATION PAGE</h1>
+        <form action="http://localhost:8080/api/v1/auth/reg" method="POST" name="users">
+            <input class="form-control" type="text" name="fullName" placeholder="fullname"><br>
+            <input class="form-control" type="email" name="email" placeholder="enter your email"><br>
+            <input class="form-control" type="text" name="age" placeholder="enter your age"><br>
+            <input class="form-control" type="password" name="password" placeholder="enter your password"><br>
+            <input class="form-control" type="password" name="passwordConfirm" placeholder="confirm your password"><br>
+            <button type="submit" class="btn btn-success">SEND</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

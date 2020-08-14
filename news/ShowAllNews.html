@@ -49,10 +49,10 @@
                         TOPICS
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Politic</a>
-                        <a class="dropdown-item" href="#">Natural</a>
-                        <a class="dropdown-item" href="#">Sport</a>
-                        <a class="dropdown-item" href="#">Fashion</a>
+                        <a class="dropdown-item" href="#" onclick="topicLoad('politic')">Politic</a>
+                        <a class="dropdown-item" href="#" onclick="topicLoad('natural')">Natural</a>
+                        <a class="dropdown-item" href="#" onclick="topicLoad('sport')">Sport</a>
+                        <a class="dropdown-item" href="#" onclick="topicLoad('fashion')">Fashion</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
@@ -81,6 +81,7 @@
                 }
             }
         }
+
 
         window.addEventListener('load', () => {
             let req = new XMLHttpRequest();
@@ -115,6 +116,43 @@
                 }
             }
         });
+
+
+        function topicLoad(name) {
+            let newsByTopic = new XMLHttpRequest();
+            newsByTopic.open('GET', `http://localhost:8080/api/v1/topic/${name}`, true);
+            newsByTopic.send();
+            newsByTopic.onload = function () {
+                if (newsByTopic.status === ACCESS_STATUS_OK) {
+                    let child = document.createElement('div');
+                    let resultList = JSON.parse(newsByTopic.responseText);
+                    resultList.forEach((value, index) => {
+                        child.setAttribute('id', `card-${value.id}`);
+                        child.innerHTML += ` 
+                                        <div class="col mb-4">
+                                         <div class="card">
+                            <img src="${value.urlLogo}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${value.name}</h5>
+                                <p class="card-text">${value.description}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"
+                                 title="delete this news" style="float: right" id="${value.id}" onclick="deleteNews(this)"></i>
+                            </div>
+                            </div>
+                        </div>`;
+
+                    });
+
+                    let main = document.getElementById('main');
+                    main.innerHTML = child.outerHTML;
+                } else {
+                    alert("error");
+                }
+            }
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

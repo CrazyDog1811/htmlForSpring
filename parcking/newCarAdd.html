@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>addNewCar</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+            <img src="http://johnkneaplerdesign.com/wp-content/uploads/2015/06/champion_11.jpg" width="80" height="30"
+                alt="" loading="lazy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/parcking/showAllCars.html">Home
+                        <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="file:///C:/Users/user/Desktop/pagesHtml/parcking/findCarByNumber.html">Find car
+                        by number
+                        <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/parcking/newCarAdd.html">Add car
+                        <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0 myBtn" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <h1>Add car</h1>
+        <form action="http://localhost:8080/api/v1/parcking" method="POST" name="parcking">
+            <input class="form-control" type="text" name="serialNumber" placeholder="registration number"><br>
+            <textarea class="form-control" name="owner" placeholder="owner"></textarea><br>
+            <input class="form-control" type="text" name="dateIn" placeholder="dateIn"><br>
+            <button type="submit" class="btn btn-success">add car</button>
+        </form>
+</body>
+
+</html>

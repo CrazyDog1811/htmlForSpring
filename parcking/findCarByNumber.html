@@ -12,11 +12,40 @@
 </head>
 
 <body>
-    <form>
-        <input type="text" placeholder="enter serial number">
-        <button type="button" class="myBtn">find car</button>
-    </form>
-    <table class="table table-dark">
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-primary mb-2">
+        <a class="navbar-brand" href="#">
+            <img src="http://johnkneaplerdesign.com/wp-content/uploads/2015/06/champion_11.jpg" width="80" height="30"
+                alt="" loading="lazy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/parcking/showAllCars.html">Home
+                        <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link"
+                        href="file:///C:/Users/user/Desktop/pagesHtml/parcking/findCarByNumber.html">Find car
+                        by number
+                        <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="file:///C:/Users/user/Desktop/pagesHtml/parcking/newCarAdd.html">Add car
+                        <span class="sr-only"></span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2 myInput" type="text" placeholder="enter reg. number">
+                <button class="btn btn-outline-success my-2 my-sm-0 myBtn" type="button">Find car</button>
+            </form>
+        </div>
+    </nav>
+    <table class="table table-dark bg-primary">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -32,7 +61,7 @@
 
     <script>
         const ACCESS_STATUS_OK = 200;
-        let inputNumber = document.querySelector('input');
+        let inputNumber = document.querySelector('.myInput');
         let btn = document.querySelector('.myBtn');
         btn.onclick = function () {
             let myValue = inputNumber.value;
